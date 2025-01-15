@@ -2,10 +2,29 @@
 
 Créer install_vim.yaml
 ```
----                                                                         - name: Playbook pour installer et configurer Vim                                hosts: localhost                                                            become: yes                                                                 tasks:                                                                        - name: Installer Vim                                                         apt:                                                                          name: vim                                                                   state: present                                                              update_cache: yes                                                                                             
-       - name: Télécharger le fichier .vimrc et le placer dans /etc/skel             get_url:                                                                      url: https://gist.githubusercontent.com/simonista/8703722/raw               dest: /etc/skel/.vimrc                                                      mode: '0644'                                                                                                 
-       - name: Vérifier que le fichier .vimrc est bien dans /etc/skel                stat:                                                                         path: /etc/skel/.vimrc                                                    register: vimrc_check                                                                                           
-       - name: Message si .vimrc est absent                                          debug:                                                                       msg: "Le fichier .vimrc n'a pas été correctement téléchargé."              when: not vimrc_check.stat.exists  
+---
+- name: Playbook pour installer et configurer Vim
+       hosts: localhost
+       become: yes
+       tasks:
+         - name: Installer Vim
+           apt:
+             name: vim
+             state: present
+             update_cache: yes                                                                                             
+         - name: Télécharger le fichier .vimrc et le placer dans /etc/skel
+           get_url:
+              url: https://gist.githubusercontent.com/simonista/8703722/raw
+              dest: /etc/skel/.vimrc
+              mode: '0644'                                                                                                 
+         - name: Vérifier que le fichier .vimrc est bien dans /etc/skel
+           stat:
+              path: /etc/skel/.vimrc
+           register: vimrc_check                                                                                           
+         - name: Message si .vimrc est absent
+           debug:
+             msg: "Le fichier .vimrc n'a pas été correctement téléchargé."
+           when: not vimrc_check.stat.exists  
 ```
 
 Lancer ansible
