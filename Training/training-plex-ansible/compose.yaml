@@ -9,7 +9,7 @@ services:
       - PGID=1000                 # ID groupe Linux
       - TZ=Europe/Paris
       - VERSION=docker
-      - PLEX_CLAIM=claim-57hhDipvGYkr5LrsoH5x
+      - PLEX_CLAIM=claim-<YOUR_CLAIM_TOKEN>
     volumes:
       - ./config:/config
       - ./media:/media
