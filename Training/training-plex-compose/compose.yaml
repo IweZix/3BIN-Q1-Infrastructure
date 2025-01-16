@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest  # Image Plex maintenue par LinuxServer.io
+    container_name: plex
+    environment:
+      - PUID=1000                 # ID utilisateur Linux
+      - PGID=1000                 # ID groupe Linux
+      - TZ=Europe/Paris
+      - VERSION=docker
+      - PLEX_CLAIM=claim-<YOUR_CLAIM_TOKEN>
+    volumes:
+      - ./config:/config
+      - ./media:/media
+    ports:
+      - 32400:32400/tcp           # Port principal pour Plex
+      - 3005:3005/tcp             # Port pour l'interface web
+      - 8324:8324/tcp             # Port pour le serveur Plex
+    restart: unless-stopped

@@ -1,0 +1,26 @@
+- hosts: localhost
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: Update and upgrade linux
+      apt:
+        upgrade: dist
+
+    - name: Install Docker and Docker-compose
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-compose-plugin
+
+    - name: Copy compose.yaml
+      copy:
+        src: ./compose.yaml
+        dest: /opt/compose.yaml
+
+    - name: Start compose
+      command: docker compose up -d
+      args:
+        chdir: /opt/compose.yaml
